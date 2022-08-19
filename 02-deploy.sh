@@ -22,24 +22,24 @@ uDocker=$1
 
 echo ""
 echo "   ======================================================================"
-echo -e "   ======                \e[1;91mMTIE MIGUEL MARTINEZ\e[0m                      ======"
+echo -e "   ======                \e[1;91mMTIE MIGUEL MARTINEZ${NORMAL}                      ======"
 echo -e "   ==                                                                  =="
-echo -e "   ==   \e[39m                 ░░  ░░                           \e[0m             =="
-echo -e "   ==   \e[39m               ░░  ░░  ░░                         \e[0m             =="
-echo -e "   ==   \e[39m                   ░░                             \e[0m             =="
+echo -e "   ==   \e[39m                 ░░  ░░                           ${NORMAL}             =="
+echo -e "   ==   \e[39m               ░░  ░░  ░░                         ${NORMAL}             =="
+echo -e "   ==   \e[39m                   ░░                             ${NORMAL}             =="
 echo -e "   ==                                                                  =="
-echo -e "   ==   \e[96m             ██████████████                       \e[0m             =="
-echo -e "   ==   \e[96m           ██░░░░░░░░░░░░░░████                   \e[0m             =="
-echo -e "   ==   \e[96m         ██░░░░░░░░░░░░░░░░░░░░██                 \e[0m             =="
-echo -e "   ==   \e[96m         ██░░░░░░░░░░░░░░░░░░░░░░██      ██  ██   \e[0m             =="
-echo -e "   ==   \e[96m         ██░░░░░░░░░░░░░░░░░░░░░░██    ██░░██░░██ \e[0m             =="
-echo -e "   ==   \e[96m         ██░░░░░░  ██░░░░░░░░░░░░██    ██░░░░░░██ \e[0m             =="
-echo -e "   ==   \e[96m         ██░░░░░░████░░░░░░░░░░░░██    ██░░░░░░██ \e[0m             =="
-echo -e "   ==   \e[96m         ██░░░░░░░░░░░░░░░░░░░░░░░░██    ██░░██   \e[0m             =="
-echo -e "   ==   \e[96m         ██          ░░░░░░░░░░░░░░░░████░░░░██   \e[0m             =="
-echo -e "   ==   \e[96m           ██        ██░░░░      ░░░░░░░░░░██     \e[0m             =="
-echo -e "   ==   \e[96m             ████████████░░████████████████       \e[0m             =="
-echo -e "   ==   \e[96m                 ████    ████                     \e[0m             =="
+echo -e "   ==   \e[96m             ██████████████                       ${NORMAL}             =="
+echo -e "   ==   \e[96m           ██░░░░░░░░░░░░░░████                   ${NORMAL}             =="
+echo -e "   ==   \e[96m         ██░░░░░░░░░░░░░░░░░░░░██                 ${NORMAL}             =="
+echo -e "   ==   \e[96m         ██░░░░░░░░░░░░░░░░░░░░░░██      ██  ██   ${NORMAL}             =="
+echo -e "   ==   \e[96m         ██░░░░░░░░░░░░░░░░░░░░░░██    ██░░██░░██ ${NORMAL}             =="
+echo -e "   ==   \e[96m         ██░░░░░░  ██░░░░░░░░░░░░██    ██░░░░░░██ ${NORMAL}             =="
+echo -e "   ==   \e[96m         ██░░░░░░████░░░░░░░░░░░░██    ██░░░░░░██ ${NORMAL}             =="
+echo -e "   ==   \e[96m         ██░░░░░░░░░░░░░░░░░░░░░░░░██    ██░░██   ${NORMAL}             =="
+echo -e "   ==   \e[96m         ██          ░░░░░░░░░░░░░░░░████░░░░██   ${NORMAL}             =="
+echo -e "   ==   \e[96m           ██        ██░░░░      ░░░░░░░░░░██     ${NORMAL}             =="
+echo -e "   ==   \e[96m             ████████████░░████████████████       ${NORMAL}             =="
+echo -e "   ==   \e[96m                 ████    ████                     ${NORMAL}             =="
 echo -e "   ==                                                                  =="
 echo -e "   ==           ███╗   ███╗███╗   ███╗███╗   ███╗██╗   ██╗             =="
 echo -e "   ==           ████╗ ████║████╗ ████║████╗ ████║██║   ██║             =="
@@ -48,7 +48,7 @@ echo -e "   ==           ██║╚██╔╝██║██║╚██╔�
 echo -e "   ==           ██║ ╚═╝ ██║██║ ╚═╝ ██║██║ ╚═╝ ██║ ╚████╔╝              =="
 echo -e "   ==           ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝     ╚═╝  ╚═══╝               =="
 echo -e "   ==                                                                  =="
-echo -e "   ======           \e[1;91mTRAEFIK AND PORTAINER DEPLOYMENT\e[0m               ======"
+echo -e "   ======           \e[1;91mTRAEFIK AND PORTAINER DEPLOYMENT${NORMAL}               ======"
 echo -e "   ======================================================================"
 echo ""
 
@@ -67,8 +67,8 @@ done
 if [ $condicion == "n" ]; then
     echo ""
     echo "   ========================================================================="
-    echo -e "               ${YELLOW}Thanks, come back soon!\e[0m              "
-    echo -e "                \e[91mMTIE MIGUEL MARTINEZ\e[0m                "
+    echo -e "               ${YELLOW}Thanks, come back soon!${NORMAL}              "
+    echo -e "                \e[91mMTIE MIGUEL MARTINEZ${NORMAL}                "
     echo "   ========================================================================="
     exit 1
 fi
@@ -87,7 +87,7 @@ done
 
 if [ $mv_core == "Y" ]; then
     FOLDER_WORK=$FOLDER_OPT
-    echo -e "    ${GREEN}Moving core folder to ${FOLDER_WORK}!\e[0m     "
+    echo -e "    ${GREEN}Moving core folder to ${FOLDER_WORK}!${NORMAL}     "
     mv core /opt
 fi
 
@@ -109,8 +109,8 @@ while [[ ! ("${eTraefik}" =~ $regex) ]]; do
 done
 
 echo ""
-echo -e "     ${GREEN}Saving mail in:\e[0m             "
-echo -e "     \e[91m$FOLDER_WORK/traefik-data/traefik.yml\e[0m      "
+echo -e "     ${GREEN}Saving mail in:${NORMAL}             "
+echo -e "     \e[91m$FOLDER_WORK/traefik-data/traefik.yml${NORMAL}      "
 sed -i 's/USER_EMAIL_LETSENCRYPT/'$eTraefik'/g' $FOLDER_WORK/core/traefik-data/traefik.yml
 
 echo ""
@@ -160,10 +160,10 @@ chown -R $uDocker:$uDocker $FOLDER_WORK/core
 
 echo ""
 echo "   ======================================================================"
-echo -e "   ======                      ${GREEN}Congratulations!!!\e[0m                  ======"
-echo -e "   ======               ${YELLOW}All folders and configurations\e[0m             ======"
-echo -e "   ======                       ${YELLOW}are already made!\e[0m                  ======"
-echo -e "   ======                     \e[91mMTIE MIGUEL MARTINEZ\e[0m                 ======"
+echo -e "   ======                      ${GREEN}Congratulations!!!${NORMAL}                  ======"
+echo -e "   ======               ${YELLOW}All folders and configurations${NORMAL}             ======"
+echo -e "   ======                       ${YELLOW}are already made!${NORMAL}                  ======"
+echo -e "   ======                     \e[91mMTIE MIGUEL MARTINEZ${NORMAL}                 ======"
 echo "   ======================================================================"
 
 echo ""
@@ -180,7 +180,7 @@ done
 
 if [ $compose == "n" ]; then
     echo -e "   ======================================================================"
-    echo -e "      \e[32mThank you!!!\e[0m"
+    echo -e "      ${GREEN}Thank you!!!${NORMAL}"
     echo -e "      ${CYAN}Now you can manually run the file${NORMAL}"
     echo -e "    "
     echo -e "          ${YELLOW}- docker-compose.yml${NORMAL}"
@@ -212,13 +212,18 @@ sed -i 's/DOMAIN_PORTAINER/'${domainPortainer}'/g' $FOLDER_WORK/core/docker-comp
 
 echo ""
 echo -e "   ======================================================================"
-echo -e "      ${GREEN}Running: docker compose -f ${FOLDER_WORK}/core/docker-compose.yml up -d\e[0m     "
+echo -e "      ${GREEN}Running: docker compose -f ${FOLDER_WORK}/core/docker-compose.yml up -d${NORMAL}     "
 docker compose -f ${FOLDER_WORK}/core/docker-compose.yml up -d
 
 
 echo -e "   ======================================================================"
-echo -e "      \e[32mCONGRATULATIONS!!!\e[0m"
-echo -e "      ${CYAN}You have successfully installed the project\e[0m"
+echo -e "   ======                    ${GREEN}CONGRATULATIONS!!!${NORMAL}                    ======"
+echo -e "   ======        ${CYAN}You have successfully installed the project${NORMAL}       ======"
+echo -e "   ======                                                          ======"
+echo -e "   ======                   ${YELLOW}MTIE MIGUEL MARTINEZ${NORMAL}                   ======"
+echo -e "   ======               ${CYAN}WebSite - mmartinezdev.com${NORMAL}                 ======"
+echo -e "   ======                    ${RED}YouTube - ElTresM${NORMAL}                     ======"
+echo -e "   ======================================================================"
 echo -e "    "
 
 login $uDocker
