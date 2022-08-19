@@ -31,20 +31,13 @@ Este proyecto hace uso de los siguientes componentes por medio del uso de conten
   - [Pre-requisitos 📋](#Pre-requisitos)
 - [Instalación 🔧](#Instalación)
   - [Ejecución Rápida 🚀](#Speed)
-  - [Configuración Windows 10 ⚙️](#Win10)
-  - [Instalación de Docker Desktop ⚙️](#Docker)
-  - [Instalación de Chocolatey ⚙️](#Chocolatey)
-  - [Instalación de Docker Machine ⚙️](#Docker-Machine)
-  - [Creación de máquina virtual con Docker Machine ⚙️](#Create-VM)
-  - [Creación de contenedores ⚙️](#Create-Containers)
-  - [Instalación de Docker-Compose ⚙️](#Docker-Compose)
-  - [Clonar repositorio ⚙️](#Clon-Repo)
-  - [Configuración de volumenes y data 🔩](#Volumens)
-  - [Comandos Docker ⚙️](#Comandos-Docker)
 - [Despliegue 📦](#Despliegue)
   - [Primer Inicio ✔️](#Start)
-  - [Actualización ❓](#Update)
-- [Posibles Errores 🛠️](#Errors)
+  - [Ya tienes Docker ❓](#Docker?)
+- [Configuraciones YAML 📄](#YAML)
+  - [docker-compose.yml](#docker-compose)
+  - [traefik.yml](#traefik-yml)
+  - [dynamic.yml](#dynamic-yml)
 - [Construido con 🛠️](#Construido)
 - [Contribuyendo 🖇️](#Contribuyendo)
 - [Wiki 📖](#Wiki)
@@ -202,6 +195,140 @@ Para realizar una actualizacion del repositorio, ejecute el archivo de tipo bash
 | docker images                            | Listado de imágenes con su nivel, repositorio, etiquetas y tamaño  |
 | docker image rm IMAGEN                   | Elimina la imágen                                                  |
 | docker rmi -f $(docker images -a -q)     | Eliminar todas las imagenes del repositorio                        |
+
+<a name="YAML" />
+
+## Configuraciones YAML 📄
+
+En esta sección se encuentras las configuraciones mas importantes para poder personalizar el proyecto si no requieren que el proyecto se despliegue dese los archivos de 01-initial.sh y 02-deploy.sh
+
+
+<a name="docker-compose" />
+
+### Docker-Compose
+
+El archivo docker-compose.yml se encuentra dentro de la carpeta core y este archivo se puede ejecutar desde su ubicación actual usando el siguiente comando
+
+```bash
+
+# Fuera de la carpeta del proyecto
+# Ejemplo: docker compose -f /home/usuario/CARPETA/core/docker-compose.yml up -d
+> docker compose -f RUTA_ARCHIVO up -d
+
+# Dentro de la carpeta del proyecto
+# Ejemplo: docker compose -f core/docker-compose.yml up -d
+> docker compose -f core/docker-compose.yml up -d
+
+# Dentro de la carpeta core
+> docker compose up -d
+
+```
+
+Dentro del archivo  docker-compose.yml se puede configurar lo siguiente para contenedor que se vaya a levantar, todo esto dentro de las etiquetas del contenedor
+
+```bash
+
+  # Contenedor Traefik (Ejemplo)
+  traefik:
+    image: traefik:latest
+    .
+    .
+    .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.traefik-secure.entrypoints=websecure"
+      # Cambiar DOMAIN_TRAEFIK por el nombre del dominio para traefik
+      - "traefik.http.routers.traefik-secure.rule=Host(`DOMAIN_TRAEFIK`)"
+      - "traefik.http.routers.traefik-secure.middlewares=user-auth@file"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
+
+  # Contenedor Portainer (Ejemplo)
+  portainer:
+    image: portainer/portainer-ce:latest
+    .
+    .
+    .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.portainer-secure.entrypoints=websecure"
+      # Cambiar DOMAIN_PORTAINER por el nombre del dominio para portainer
+      - "traefik.http.routers.portainer-secure.rule=Host(`DOMAIN_PORTAINER`)" 
+      - "traefik.http.routers.portainer-secure.service=portainer"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+
+```
+
+<a name="traefik-yml" />
+
+### Traefik YAML
+
+El archivo traefik.yml se encuentra dentro de la carpeta core/traefik-data donde se puede personalizar de forma manual lo siguiente
+
+```bash
+api:
+  dashboard: true
+
+entryPoints:
+  web:
+    address: :80
+    .
+    .
+    .
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      # Cambiar USER_EMAIL_LETSENCRYPT por el correo electronico que se usara para los
+      # certificados SSL
+      email: USER_EMAIL_LETSENCRYPT
+      storage: acme.json
+      keyType: EC384
+      httpChallenge:
+        entryPoint: web
+
+```
+
+<a name="dynamic-yml" />
+
+### Dynamic YAML
+
+El archivo dynamic.yml se encuentra dentro de la carpeta core/traefik-data/configurations en este archivo se pueden realizar varias configuraciones manuales las cuales son las siguientes
+
+```bash
+# Dynamic configuration
+http:
+  middlewares:
+    secureHeaders:
+      headers:
+        sslRedirect: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+
+    user-auth:
+      basicAuth:
+        users:
+          # Cambiar USER_BASIC_AUTH por el usuario y la contraseña que te genera 
+          # en el script de bash al momento de su ejecución, la contaseña es un bash
+          # así que no todas son iguales
+          # Ejemplo: usuario:0YHQsSDRj9C90YMgMzAgMTk6NTE
+          - "USER_BASIC_AUTH"
+
+tls:
+  options:
+    default:
+      cipherSuites:
+        - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+      minVersion: VersionTLS12
+
+```
 
 <a name="Construido" />
 
