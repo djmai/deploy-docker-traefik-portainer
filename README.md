@@ -1,6 +1,6 @@
 <img width="300px" align="right" alt="logo_mmmv" src="https://mmartinezdev.com/images/logo_white.png">
 
-# Deploy Docker CI/CD - Traefik y Portainer
+# Deploy Docker CI/CD para VPS (Ubuntu, Debian) - Traefik y Portainer
 
 Despliegue de ingeniería de software utilizando Docker para una integración más rápida
 

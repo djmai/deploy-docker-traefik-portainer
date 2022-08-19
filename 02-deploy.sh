@@ -226,5 +226,11 @@ echo -e "   ======                    ${RED}YouTube - ElTresM${NORMAL}          
 echo -e "   ======================================================================"
 echo -e "    "
 
+
+echo -e "   ======================================================================"
+echo -e "   ======                    ${GREEN}Login con el usuario ${uDocker}!!!${NORMAL}                    ======"
+echo -e "   ======================================================================"
+echo -e "    "
+
 login $uDocker
-docker compose ps
+# docker compose ps
