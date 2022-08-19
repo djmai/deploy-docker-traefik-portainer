@@ -3,7 +3,7 @@ services:
   traefik:
     image: traefik:latest
     container_name: traefik
-    restart: unless-stopped #(always - siempre reinicia) Solo se reinicia si el usuario lo detiene
+    restart: always #(always - siempre reinicia) Solo se reinicia si el usuario lo detiene
     security_opt:
       - no-new-privileges:true # Bandera de seguridad para el contenedor
     networks:
@@ -28,7 +28,7 @@ services:
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
-    restart: unless-stopped #(always - siempre reinicia) Solo se reinicia si el usuario lo detiene
+    restart: always #(always - siempre reinicia) Solo se reinicia si el usuario lo detiene
     depends_on:
       - traefik
     security_opt:
