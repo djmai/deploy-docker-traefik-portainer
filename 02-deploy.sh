@@ -74,18 +74,6 @@ if [ $condicion == "n" ]; then
     exit 1
 fi
 
-# # clear
-# # echo ""
-# # echo "   ========================================================================="
-# # echo -e "                    \e[32mCloning the repo\e[0m                "
-# # echo -e "     \e[33m${REPO_GIT}\e[0m"
-# # echo -e "                                                    "
-# # echo -e "                    \e[33m-> Command\e[0m                      "
-# # echo -e "${RED}git clone ${REPO_GIT}\e[0m  ======"
-# # echo -e "                                                    "
-# # echo "   ========================================================================="
-# # git clone https://github.com/kike28/app-docker-server.git
-
 echo ""
 echo -e "${YELLOW}-> Want to move the core folder to ${FOLDER_OPT} ? [Y/n]:? ${NORMAL}\c  "
 read mv_core
@@ -123,25 +111,6 @@ while [[ ! ("${eTraefik}" =~ $regex) ]]; do
     echo -e "${YELLOW}-> Please enter a valid email address? [tucorreo@mail.com]: ${NORMAL}\c"
     read eTraefik
 done
-
-# # if [ $mv_core == "Y" ]; then
-# #     echo ""
-# #     echo "   ========================================================================="
-# #     echo -e "                   ${YELLOW}Saving mail in:\e[0m             "
-# #     echo -e "            \e[91m$FOLDER_OPT/core/traefik-data/traefik.yml\e[0m      "
-# #     echo "   ========================================================================="
-# #     # sed -i 's/email: tucorreo@mail.com/email: '$eTraefik'/' $FOLDER_OPT/core/traefik-data/traefik.yml
-# #     # exit 1
-# #     # elif [ $mv_core == "n" ]; then
-# # else
-# #     echo ""
-# #     echo "   ========================================================================="
-# #     echo -e "                   ${YELLOW}Saving mail in:\e[0m             "
-# #     echo -e "      \e[91m$FOLDER_CORE/core/traefik-data/traefik.yml\e[0m      ======"
-# #     echo "   ========================================================================="
-# #     # sed -i 's/email: tucorreo@mail.com/email: '$eTraefik'/' $FOLDER_CORE/core/traefik-data/traefik.yml
-# #     # exit 1
-# # fi
 
 echo ""
 echo -e "     ${GREEN}Saving mail in:\e[0m             "
@@ -234,6 +203,17 @@ if [ $compose == "n" ]; then
     exit 1
 fi
 
+echo ""
+echo -e "${YELLOW}-> Enter the domain or subdomain name for Traefik [mydomiain.com or subdomain.mydomain.com]:? ${NORMAL}\c  "
+read domainTraefik
+sed -i 's/DOMAIN_TRAEFIK/'${domainTraefik}'/g' $FOLDER_WORK/core/docker-compose.yml
+
+echo ""
+echo -e "${YELLOW}-> Enter the domain or subdomain name for Portainer [mydomiain.com or subdomain.mydomain.com]:? ${NORMAL}\c  "
+read domainPortainer
+sed -i 's/DOMAIN_PORTAINER/'${domainTraefik}'/g' $FOLDER_WORK/core/docker-compose.yml
+
+echo ""
 echo -e "   ======================================================================"
 echo -e "      ${GREEN}Running: docker compose -f ${FOLDER_WORK}/core/docker-compose.yml up -d\e[0m     "
 docker compose -f ${FOLDER_WORK}/core/docker-compose.yml up -d

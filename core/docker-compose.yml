@@ -22,7 +22,7 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
       - "traefik.http.routers.traefik-secure.entrypoints=websecure"
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.dominio.tld`)" # Cambiar por el nombre del dominio del traefik
+      - "traefik.http.routers.traefik-secure.rule=Host(`DOMAIN_TRAEFIK`)" # Cambiar por el nombre del dominio del traefik
       - "traefik.http.routers.traefik-secure.middlewares=user-auth@file"
       - "traefik.http.routers.traefik-secure.service=api@internal"
   portainer:
@@ -44,7 +44,7 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
       - "traefik.http.routers.portainer-secure.entrypoints=websecure"
-      - "traefik.http.routers.portainer-secure.rule=Host(`portainer.dominio.tld`)" # Cambiar por el nombre del dominio del portainer
+      - "traefik.http.routers.portainer-secure.rule=Host(`DOMAIN_PORTAINER`)" # Cambiar por el nombre del dominio del portainer
       - "traefik.http.routers.portainer-secure.service=portainer"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
 networks:
