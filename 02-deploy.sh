@@ -204,14 +204,14 @@ if [ $compose == "n" ]; then
 fi
 
 echo ""
-echo -e "${YELLOW}-> Enter the domain or subdomain name for Traefik [mydomiain.com or subdomain.mydomain.com]:? ${NORMAL}\c  "
+echo -e "${YELLOW}-> Enter the domain or subdomain name for Traefik [mydomain.com or subdomain.mydomain.com]:? ${NORMAL}\c  "
 read domainTraefik
 sed -i 's/DOMAIN_TRAEFIK/'${domainTraefik}'/g' $FOLDER_WORK/core/docker-compose.yml
 
 echo ""
-echo -e "${YELLOW}-> Enter the domain or subdomain name for Portainer [mydomiain.com or subdomain.mydomain.com]:? ${NORMAL}\c  "
+echo -e "${YELLOW}-> Enter the domain or subdomain name for Portainer [mydomain.com or subdomain.mydomain.com]:? ${NORMAL}\c  "
 read domainPortainer
-sed -i 's/DOMAIN_PORTAINER/'${domainTraefik}'/g' $FOLDER_WORK/core/docker-compose.yml
+sed -i 's/DOMAIN_PORTAINER/'${domainPortainer}'/g' $FOLDER_WORK/core/docker-compose.yml
 
 echo ""
 echo -e "   ======================================================================"
@@ -224,4 +224,5 @@ echo -e "      \e[32mCONGRATULATIONS!!!\e[0m"
 echo -e "      ${CYAN}You have successfully installed the project\e[0m"
 echo -e "    "
 
+login $uDocker
 docker compose ps
