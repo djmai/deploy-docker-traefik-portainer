@@ -1,0 +1,56 @@
+version: "3.3"
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    restart: unless-stopped #(always - siempre reinicia) Solo se reinicia si el usuario lo detiene
+    security_opt:
+      - no-new-privileges:true # Bandera de seguridad para el contenedor
+    networks:
+       proxy:
+         ipv4_address: 172.18.0.2
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik-data/traefik.yml:/traefik.yml:ro
+      - ./traefik-data/acme.json:/acme.json
+      - ./traefik-data/configurations:/configurations
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.traefik-secure.entrypoints=websecure"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.dominio.tld`)" # Cambiar por el nombre del dominio del traefik
+      - "traefik.http.routers.traefik-secure.middlewares=user-auth@file"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped #(always - siempre reinicia) Solo se reinicia si el usuario lo detiene
+    depends_on:
+      - traefik
+    security_opt:
+      - no-new-privileges:true # Bandera de seguridad para el contenedor
+    networks:
+      proxy:
+        ipv4_address: 172.18.0.3
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./portainer-data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.portainer-secure.entrypoints=websecure"
+      - "traefik.http.routers.portainer-secure.rule=Host(`portainer.dominio.tld`)" # Cambiar por el nombre del dominio del portainer
+      - "traefik.http.routers.portainer-secure.service=portainer"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+networks:
+  proxy:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.18.0.0/16
+         #gateway: 172.18.0.1/16 # Si el gateway da problemas se elimina
