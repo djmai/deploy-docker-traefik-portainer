@@ -101,14 +101,18 @@ echo "   ======================================================================"
 echo -e "   ======             \e[91mInstalling and upgrading packages\e[0m            ======"
 echo "   ======================================================================"
 mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+name=$(lsb_release -is)
+distribucion=$(lsb_release -cs)
+
+curl -fsSL https://download.docker.com/linux/${name,,}/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
 echo ""
 echo "   ======================================================================"
 echo -e "   ======        \e[96mAdding repository for Docker installations\e[0m        ======"
 echo "   ======================================================================"
 
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/${name,,} $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 echo ""
 echo "   ======================================================================"
