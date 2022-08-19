@@ -16,7 +16,6 @@ BLINK=$(tput blink)
 REVERSE=$(tput smso)
 UNDERLINE=$(tput smul)
 
-REPO_GIT="https://github.com/kike28/app-docker-server.git"
 FOLDER_WORK=$(pwd)
 FOLDER_OPT="/opt"
 uDocker=$1
@@ -88,17 +87,14 @@ done
 
 if [ $mv_core == "Y" ]; then
     FOLDER_WORK=$FOLDER_OPT
-    # echo "   ========================================================================="
     echo -e "    ${GREEN}Moving core folder to ${FOLDER_WORK}!\e[0m     "
-    # mv core /opt
-    # echo "   ========================================================================="
+    mv core /opt
 fi
 
 echo ""
 echo "   ========================================================================="
 echo -e "                                ${RED}Traefik${NORMAL}                   "
 echo -e "                     ${YELLOW}Mail configuration for SSL${NORMAL}          "
-# echo "   ========================================================================="
 
 echo ""
 echo -e "${YELLOW}-> Please enter a valid email address? [tucorreo@mail.com]: ${NORMAL}\c  "
@@ -136,6 +132,7 @@ echo -e "${YELLOW}-> Enter the password for the Traefik user: ${NORMAL}\c  "
 read -s pTraefix
 
 gPassword=$(htpasswd -nb $uTraefix $pTraefix)
+echo $gPassword
 sed -i 's/USER_BASIC_AUTH/'${gPassword}'/g' $FOLDER_WORK/core/traefik-data/configurations/dynamic.yml
 
 echo ""
